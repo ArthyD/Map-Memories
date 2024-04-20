@@ -37,11 +37,11 @@ class Map(tk.Frame):
 
         map_widget.set_position(48.653103594064795, -2.356723508882328)
         map_widget.set_zoom(15)
-        marker_1 = map_widget.set_marker(48.68321841376174, -2.3191363028489853, text="Cap Frehel", command=self.show_image("./photo/1/IMG_1980.jpeg"))
+        marker_1 = map_widget.set_marker(48.68321841376174, -2.3191363028489853, text="Cap Frehel", command=self.show_image)
 
-    def show_image(self,path):
-        image=ImageTk.PhotoImage(Image.open(path))
-        print(f"Opening : {path}")
+    def show_image(self, marker):
+        
+        print(f"Opening : {marker.text}")
 
 if __name__ == '__main__':
     app = App()
