@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 import tkintermapview as tkmap
 from PIL import ImageTk, Image
 class App(tk.Tk):
@@ -32,6 +33,8 @@ class App(tk.Tk):
 class Map(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.parent = parent
+        self.controller = controller
         map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(), corner_radius=0)
         map_widget.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
@@ -40,8 +43,26 @@ class Map(tk.Frame):
         marker_1 = map_widget.set_marker(48.68321841376174, -2.3191363028489853, text="Cap Frehel", command=self.show_image)
 
     def show_image(self, marker):
-        
+        carussel = Carrussel(self, self.parent, marker.text)
+        carussel.grid(row=0,column=0,sticky="nsew")
         print(f"Opening : {marker.text}")
+
+class Carrussel(tk.Frame):
+    def __init__(self, parent, controller, place_name):
+        tk.Frame.__init__(self,parent)
+        print(f"{place_name}")
+        image = Image.open("./photo/1/IMG_1980.jpeg")
+        photo = ImageTk.PhotoImage(image.resize((200,200)))
+        label = tk.Label(self, image=photo)
+        label.image = photo
+        label.pack()
+        
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app = App()
