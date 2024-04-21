@@ -44,7 +44,7 @@ class Map(tk.Frame):
 
     def show_image(self, marker):
         carussel = Carrussel(self, self.parent, marker.text)
-        carussel.grid(row=0,column=0,sticky="nsew")
+        carussel.place(in_=self,anchor=tk.CENTER,relx=0.5,rely=0.5)
         print(f"Opening : {marker.text}")
 
 class Carrussel(tk.Frame):
@@ -54,8 +54,10 @@ class Carrussel(tk.Frame):
         image = Image.open("./photo/1/IMG_1980.jpeg")
         photo = ImageTk.PhotoImage(image.resize((200,200)))
         label = tk.Label(self, image=photo)
+        label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         label.image = photo
         label.pack()
+        
         
 
 
