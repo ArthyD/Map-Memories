@@ -43,25 +43,32 @@ class Map(tk.Frame):
         marker_1 = map_widget.set_marker(48.68321841376174, -2.3191363028489853, text="Cap Frehel", command=self.show_image)
 
     def show_image(self, marker):
-        carussel = Carrussel(self, self.parent, marker.text)
-        carussel.place(in_=self,anchor=tk.CENTER,relx=0.5,rely=0.5)
+        photo = Photo(self, self.parent)
+        photo.place(in_=self,anchor=tk.CENTER,relx=0.5,rely=0.5)
         print(f"Opening : {marker.text}")
 
-class Carrussel(tk.Frame):
-    def __init__(self, parent, controller, place_name):
+class Photo(tk.Frame):
+    def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
-        print(f"{place_name}")
+        self.parent = parent
         image = Image.open("./photo/1/IMG_1980.jpeg")
-        photo = ImageTk.PhotoImage(image.resize((200,200)))
-        label = tk.Label(self, image=photo)
-        label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-        label.image = photo
-        label.pack()
-        
-        
+        w, h = self.image_size(image)
+        photo = ImageTk.PhotoImage(image.resize((w,h)))
+        self.photoLabel = tk.Label(self, image=photo)                                          
+        self.photoLabel.image = photo
+        self.photoLabel.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        self.photoLabel.pack()
 
-
-
+    def image_size(self, image):
+        imgw, imgh = image.size
+        windw, windh = self.parent.winfo_width(), self.parent.winfo_height()
+        if imgw < windw//2 or imgh < windh//2:
+            return imgw, imgh 
+        else :
+            ratiow = imgw//(windw//2)
+            ratioh = imgh//(windh//2)
+            max_ratio = max(ratiow, ratioh)
+            return imgw//max_ratio, imgh//max_ratio
 
 
 
