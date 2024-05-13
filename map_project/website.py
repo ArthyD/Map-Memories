@@ -1,16 +1,15 @@
 from flask import Blueprint, render_template, request, flash, jsonify
-from . import db, ALLOWED_EXTENSIONS,UPLOAD_FOLDER
+from . import db, ALLOWED_EXTENSIONS,UPLOAD_FOLDER,script_directory
 from sqlalchemy import func
 from werkzeug.utils import secure_filename
 import os
-from .models import Image
+from .models import ImageServer
 
-script_directory = os.path.dirname(os.path.abspath(__file__))
+
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    
     if request.method == 'POST':
         if 'upload' in request.form:
             name = request.form.get('name')
@@ -28,21 +27,21 @@ def home():
                 filename = secure_filename(file.filename)
                 file_path = os.path.join(file_path, filename)
                 file.save(file_path)
-            new_image = Image(name=name, lat=lat, long=long, path=file_path, comment=com)
+            new_image = ImageServer(name=name, lat=lat, long=long, path=file_path, comment=com)
             db.session.add(new_image)
             db.session.commit()
-            photo_list = Image.query.all()
+            photo_list = ImageServer.query.all()
             return render_template("home.html", photo_list=photo_list)
         elif 'suppr' in request.form:
             id = request.form.get("suppr")
-            photo_to_delete = Image.query.filter_by(id=id).first()
+            photo_to_delete = ImageServer.query.filter_by(id=id).first()
             os.remove(photo_to_delete.path)
             db.session.delete(photo_to_delete)
             db.session.commit()
             
-            photo_list = Image.query.all()
+            photo_list = ImageServer.query.all()
             return render_template("home.html", photo_list=photo_list)
-    photo_list = Image.query.all()     
+    photo_list = ImageServer.query.all()     
     return render_template("home.html", photo_list=photo_list)
 
 def allowed_file(filename):

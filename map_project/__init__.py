@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from os import path
+import os
 
 
 db = SQLAlchemy()
@@ -8,6 +8,7 @@ DB_NAME = "database.db"
 
 UPLOAD_FOLDER = 'upload/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+script_directory = os.path.dirname(os.path.abspath(__file__))
 
 def create_app():
     app = Flask(__name__)
@@ -24,8 +25,6 @@ def create_app():
     create_database(app)
 
     return app
-
-
 
 def create_database(app):
     with app.app_context():

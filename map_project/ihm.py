@@ -2,11 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 import tkintermapview as tkmap
 from PIL import ImageTk, Image
-import json
 import os
+from . import db, script_directory
+from .models import ImageServer
+from sqlalchemy import create_engine, text
+
 
 class IHM(tk.Tk):
-    
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self,*args, **kwargs)
         container = tk.Frame(self)
@@ -30,7 +32,6 @@ class IHM(tk.Tk):
 
         self.show_frame(Map)
         
-
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
@@ -40,8 +41,9 @@ class Map(tk.Frame):
     def __init__(self, parent, position_list, database_path):
         tk.Frame.__init__(self, parent)
         self.parent = parent
-        self.map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(), corner_radius=0, use_database_only=True, database_path=database_path)
-        self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
+        self.map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(), corner_radius=0)
+        #self.map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(), corner_radius=0, use_database_only=True, database_path=database_path)
+        #self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
     
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         self.map_widget.set_position(48.653103594064795, -2.356723508882328)
@@ -53,10 +55,11 @@ class Map(tk.Frame):
     def show_image(self, marker):
         self.photo = PhotoFrame(self, self.parent, marker.data)
         self.photo.place(in_=self,anchor=tk.CENTER,relx=0.5,rely=0.5)
-        print(f"Opening : {marker.text}")
+        print(f"Opening : {marker.text} with data : {marker.data}")
 
-    def add_marker(self, data_json):
-        marker = self.map_widget.set_marker(data_json["lat"], data_json["long"], text=data_json["name"], command=self.show_image, data=data_json["photo"])
+    def add_marker(self, position):
+        print(position)
+        marker = self.map_widget.set_marker(position['lat'], position['long'], position['name'], command=self.show_image, data=position['path'])
         return marker
 
 class PhotoFrame(tk.Frame):
@@ -100,15 +103,17 @@ class Photo():
 class PhotoAlbum():
     def __init__(self):
         print("Album Creation")
-        self.photoList = []
-        self.photoList.append(self.get_location("./photo/1/info.json"))
-        print(self.photoList)
+        self.photoList = [] 
+        database_path = os.path.join(script_directory, "../instance/database.db")
+        engine = create_engine('sqlite:///'+database_path)
 
-    def get_location(self, file_to_parse):
-        with open(file_to_parse) as file:
-            file_contents = file.read()
-        parsed_json = json.loads(file_contents)
-        return parsed_json
+        with engine.connect() as connection:
+            result = connection.execute(text("select * from image_server"))
+            for row in result:
+                image = dict(name=row.name, lat=row.lat, long=row.long, comment=row.comment, path=row.path)
+                print(image)
+                self.photoList.append(image)
+        
 
 def get_tk_image(image):
     return ImageTk.PhotoImage(image)

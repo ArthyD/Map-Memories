@@ -1,7 +1,7 @@
 from sqlalchemy.sql import func
 from . import db
 
-class Image(db.Model):
+class ImageServer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
     lat = db.Column(db.Float)
