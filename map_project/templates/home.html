@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content%}
+<div class="row">
+    <form method="POST" class="col s12" enctype=multipart/form-data>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="name">Lieu :</label>
+            <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Nom lieu"
+            />
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="img">Image :</label>
+            <input
+                type="file"
+                class="form-control"
+                id="img"
+                name="img"
+                accept="image/*"
+            />
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="lat">Latitude :</label>
+            <input
+                type="number"
+                class="form-control"
+                id="lat"
+                name="lat"
+                placeholder="Latitude"
+                step="0.0000000001"
+            />
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="long">Longitude :</label>
+            <input
+                type="number"
+                class="form-control"
+                id="long"
+                name="long"
+                placeholder="Longitude"
+                step="0.0000000001"
+            />
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="com">Commentaire :</label>
+            <textarea
+                class="form-control"
+                id="com"
+                name="com"
+                placeholder="Commentaire"
+                rows="4" 
+                cols="50"
+            >
+
+            </textarea>
+        </div>
+
+        <br>
+        <button type="submit"
+                class="btn btn-primary" name="upload">
+            Upload Photo
+        </button>
+
+        <br>
+        <br>
+        <div>
+         <h2>Liste des photos</h2>
+         <div class="row">
+            <div class="col s12">
+                {%for photo in photo_list%}
+                <div class="card blue-grey darken-1 col s4">
+                    <div class="card-content white-text">
+                        <p class="card-title">Photo : {{photo.name}}</p>
+                        <p class="card-content">
+                            Latitude : {{photo.lat}}, Longitude : {{photo.long}}
+                        </p>
+                        <p class="card-action">
+                            <form method = "POST">
+                            <br>
+                            <button type="submit"
+                                class="btn btn-primary"
+                                name="suppr"
+                                value={{photo.id}}>Supprimer
+                            </button>
+                    </div>
+                </div>
+                <br>
+                {%endfor%}
+            </div>
+        </div>
+    </form>
+{% endblock %}

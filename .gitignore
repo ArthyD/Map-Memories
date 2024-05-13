@@ -1,2 +1,3 @@
 venv/
 photo/
+__pycache__/
