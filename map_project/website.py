@@ -5,7 +5,6 @@ from werkzeug.utils import secure_filename
 import os
 from .models import ImageServer
 
-
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])

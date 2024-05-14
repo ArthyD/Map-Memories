@@ -6,6 +6,7 @@ import os
 from . import db, script_directory
 from .models import ImageServer
 from sqlalchemy import create_engine, text
+import time
 
 
 class IHM(tk.Tk):
@@ -35,6 +36,10 @@ class IHM(tk.Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+    
+    def reload(self):
+        self.album.update_photoList()
+        self.map.update_markers(self.album.photoList)
 
 
 class Map(tk.Frame):
@@ -49,8 +54,7 @@ class Map(tk.Frame):
         self.map_widget.set_position(48.653103594064795, -2.356723508882328)
         self.map_widget.set_zoom(15)
         
-        for position in position_list:
-            self.add_marker(position)
+        self.update_markers(position_list=position_list)
 
     def show_image(self, marker):
         self.photo = PhotoFrame(self, self.parent, marker.data)
@@ -61,6 +65,11 @@ class Map(tk.Frame):
         print(position)
         marker = self.map_widget.set_marker(position['lat'], position['long'], position['name'], command=self.show_image, data=position['path'])
         return marker
+    
+    def update_markers(self, position_list):
+        self.map_widget.delete_all_marker()
+        for position in position_list:
+            self.add_marker(position)
 
 class PhotoFrame(tk.Frame):
     def __init__(self, parent, controller, path):
@@ -105,9 +114,13 @@ class PhotoAlbum():
         print("Album Creation")
         self.photoList = [] 
         database_path = os.path.join(script_directory, "../instance/database.db")
-        engine = create_engine('sqlite:///'+database_path)
+        self.engine = create_engine('sqlite:///'+database_path)
+        self.update_photoList()
+        
 
-        with engine.connect() as connection:
+    def update_photoList(self):
+        self.photoList = [] 
+        with self.engine.connect() as connection:
             result = connection.execute(text("select * from image_server"))
             for row in result:
                 image = dict(name=row.name, lat=row.lat, long=row.long, comment=row.comment, path=row.path)
