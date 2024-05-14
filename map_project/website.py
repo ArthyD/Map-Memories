@@ -15,7 +15,6 @@ def home():
             lat = request.form.get('lat')
             long = request.form.get("long")
             photo = request.form.get("img")
-            com = request.form.get("com")
             file = request.files['img']
             file_path = os.path.join(script_directory, UPLOAD_FOLDER)
             print(f"{name} : {photo}")
@@ -26,7 +25,7 @@ def home():
                 filename = secure_filename(file.filename)
                 file_path = os.path.join(file_path, filename)
                 file.save(file_path)
-            new_image = ImageServer(name=name, lat=lat, long=long, path=file_path, comment=com)
+            new_image = ImageServer(name=name, lat=lat, long=long, path=file_path)
             db.session.add(new_image)
             db.session.commit()
             photo_list = ImageServer.query.all()
