@@ -26,7 +26,7 @@ class IHM(tk.Tk):
 
         self.frames = {}
 
-        frame = Map(container, self.album.photoList, os.path.dirname("/Volumes/Crucial X6/tiles.db"))
+        frame = Map(container, self.album.photoList, os.path.dirname("./tiles.db"))
         self.frames[Map]= frame
         frame.grid(row=0,column=0,sticky="nsew")
         self.map = frame
@@ -41,18 +41,17 @@ class IHM(tk.Tk):
         self.album.update_photoList()
         self.map.update_markers(self.album.photoList)
 
-
 class Map(tk.Frame):
     def __init__(self, parent, position_list, database_path):
         tk.Frame.__init__(self, parent)
         self.parent = parent
-        self.map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(), corner_radius=0)
-        #self.map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(), corner_radius=0, use_database_only=True, database_path=database_path)
-        #self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
+        #self.map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(), corner_radius=0)
+        self.map_widget=tkmap.TkinterMapView(self, width=parent.winfo_screenwidth(),height=parent.winfo_screenheight(),max_zoom=14, corner_radius=0, use_database_only=True, database_path=database_path)
+        self.map_widget.set_tile_server("http://tiles.openseamap.org/seamark//{z}/{x}/{y}.png")
     
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         self.map_widget.set_position(48.653103594064795, -2.356723508882328)
-        self.map_widget.set_zoom(15)
+        self.map_widget.set_zoom(10)
         
         self.update_markers(position_list=position_list)
 

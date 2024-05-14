@@ -1,0 +1,174 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'aileronheavy';
+    src: url("../src/assets/font/aileron-heavy-webfont.woff2") format('woff2'),
+         url("../src/assets/font/aileron-heavy-webfont.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+  
+  }
+  
+  @font-face {
+    font-family: 'bebasNeue';
+    src: url("../src/assets/font/BebasNeue-Regular.woff2") format('woff2'),
+         url("../src/assets/font/BebasNeue-Regular.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+  
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url("../src/assets/font/Montserrat-Light.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  
+  }
+
+pre{
+  border-radius: 10px;
+  border: 1px solid;
+  word-wrap: break-word;      /* IE 5.5-7 */
+  white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+  white-space: pre-wrap;      /* current browsers */
+}
+body{
+    font-family:'Montserrat';
+}
+
+.mainTitle{
+    font-family: 'aileronheavy';
+    text-align: center;
+}
+
+.titleLine{
+    border: none;
+    background-color: #FCB820;
+    color:#FCB820;
+    height: 5px;
+    width: 50%;
+    border-radius: 10px;
+  }
+.greatLine{
+    border: none;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    background-color: #FCB820;
+    color:#FCB820;
+    height: 3px;
+}
+
+.cardComp{
+  border-radius:25px solid;
+  text-align:center;
+  cursor:pointer;
+}
+
+  
+  article{
+    margin-top:5%;
+    margin-left:5%;
+    margin-right:5%;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+@media(min-width: 600px){
+  article{
+    margin-right:5%;
+    margin-left:5%;
+    margin-top:5%;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+}
+
+@media(min-width: 900px){
+  article{
+    margin-right:20%;
+    margin-left:20%;
+    margin-top:5%;
+    font-family: 'Montserrat', sans-serif;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+}
+
+header, body, footer{
+    font-family: 'Montserrat', sans-serif;
+}
+
+h2,h3,h4,h5,h6{
+  text-align:left;
+}
+
+h3{
+  color:#7488DC;
+}
+
+
+h2{
+  color:#EF8538;
+}
+h1{
+  text-align:center;
+  color:#7488DC;
+}
+
+.shadow-img{
+  box-shadow: 5px 5px lightgrey;
+}
+
+.link{
+  text-decoration: none;
+  color: #7488DC;
+  font-style: italic;
+}
+
+
+
+.cardWidget{
+  margin-bottom:50px;
+}
+
+.mainSubTitle {
+  font-family: 'aileronheavy';
+  text-align: center;
+}
+
+.mainSubTitle-line{
+  border: none;
+  background-color: #FCB820;
+  color:#FCB820;
+  height: 5px;
+  width: 150px;
+  border-radius: 10px;
+}
+
+.footer-basic {
+  padding:40px 0;
+  }
+  
+  .footer-basic .social {
+  text-align:center;
+  padding-bottom:25px;
+  }
+  
+  .footer-basic .social > a {
+  font-size:24px;
+  width:40px;
+  height:40px;
+  line-height:40px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+  border:1px solid #ccc;
+  margin:0 8px;
+  color:inherit;
+  opacity:0.75;
+  }
+  
+  .footer-basic .social > a:hover {
+  opacity:0.9;
+  }

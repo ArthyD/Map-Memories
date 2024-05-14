@@ -1,0 +1,16 @@
+
+ 
+<div class="grid">
+  <div class="col-12 md:col-12 lg:col-12 xl:col-12 grid">
+    <div *ngFor="let widget of widgetsList" [ngClass]="widget.style.size">
+      <ng-container [ngTemplateOutlet]="widgetParser" [ngTemplateOutletContext]="{myWidget:widget}"></ng-container>
+    <div>
+           
+  </div>
+</div>
+
+
+    <ng-template #widgetParser let-widget="myWidget">
+      <app-map-widget *ngIf="widget.type=='map'"></app-map-widget>
+    </ng-template>
+  

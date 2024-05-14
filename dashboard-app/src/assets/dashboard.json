@@ -1,0 +1,33 @@
+{
+
+    "mainContents":[
+
+        {
+            "name":"Carte des souvenirs",
+            "type":"map",
+            "mapContent":"memories",
+            "desc":"",  
+            "style":{
+                "size":"col-12",
+                "colorTitle":"#E63D6C"
+            },
+            "startZoom":10,
+            "startLocation":[48.3833, -4.6167]
+        }
+    ],
+    "mapContent":[
+        {
+            "name":"Carte des souvenirs",
+            "type":"map",
+            "mapContent":"memories",
+            "desc":"",  
+            "style":{
+                "size":"col-12",
+                "colorTitle":"#E63D6C"
+            },
+            "startZoom":10,
+            "startLocation":[48.3833, -4.6167]
+        }
+    ]
+    
+}
