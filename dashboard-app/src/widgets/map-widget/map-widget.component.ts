@@ -28,7 +28,7 @@ export class MapWidgetComponent {
     this.mapMemories = L.map('mapMemories').setView([48.3833, -4.6167], 10);
     this.mapMemories.scrollWheelZoom.disable();
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: 'Arthy Map'
+    attribution: 'Carte Souvenirs'
     }).addTo(this.mapMemories);
     
     
@@ -43,7 +43,6 @@ export class MapWidgetComponent {
         console.log(location)
         L.marker([location.lat,location.long], {icon: myIcon}).bindPopup(location.name).on('click',()=>{
           console.log(location.path)
-          this.currentCaroussel=location.path
         }).addTo(this.mapMemories);
       }
     });

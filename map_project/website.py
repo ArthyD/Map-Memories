@@ -42,6 +42,16 @@ def home():
     photo_list = ImageServer.query.all()     
     return render_template("home.html", photo_list=photo_list)
 
+@views.route('/get_locations')
+def get_locations():
+    locations = []
+    result = ImageServer.query.all() 
+    for row in result:
+        image = dict(name=row.name, lat=row.lat, long=row.long, comment=row.comment, path=row.path)
+        print(image)
+        locations.append(image)
+    return locations
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

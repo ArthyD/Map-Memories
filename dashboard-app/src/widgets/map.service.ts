@@ -9,7 +9,7 @@ export class MapService {
   constructor(private http: HttpClient) { }
 
   get_json(){
-    return this.http.get('http://192.168.0.107:8091/get_json')
+    return this.http.get('/get_locations')
   }
 
 }
