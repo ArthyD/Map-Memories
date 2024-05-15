@@ -37,7 +37,7 @@ export class MapWidgetComponent {
         console.log(location)
         L.marker([location.lat,location.long], {icon: myIcon}).bindPopup(location.name).on('click',()=>{
           console.log(location.path);
-          this.imagePath="http://photo.anniv/get_image/"+location.path;
+          this.imagePath="http://127.0.0.1:8080/get_image/"+location.path;
           this.imageName=location.name;
           this.showDialog();
         }).addTo(this.mapMemories);

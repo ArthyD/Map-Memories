@@ -4,6 +4,7 @@ from sqlalchemy import func
 from werkzeug.utils import secure_filename
 import os
 from .models import ImageServer
+from flask_cors import cross_origin, CORS
 
 views = Blueprint('views', __name__)
 
@@ -44,6 +45,7 @@ def home():
     return render_template("home.html", photo_list=photo_list)
 
 @views.route('/get_locations')
+@cross_origin()
 def get_locations():
     locations = []
     result = ImageServer.query.all() 
@@ -54,6 +56,7 @@ def get_locations():
     return locations
 
 @views.route('/get_image/<name>')
+@cross_origin()
 def get_iamge(name):
     
     return send_file(UPLOAD_FOLDER+"/"+name)
@@ -64,7 +67,7 @@ def connect():
     if request.method == 'POST':
         ssid = request.form.get('ssid')
         password = request.form.get('pass')
-        os.system(f"nmcli d wifi connect {ssid} password {password} iface wlan1")
+        os.system(f"nmcli d wifi connect '{ssid}' password '{password}' iface wlan1")
         return redirect("/")
 
     return render_template("connect.html")

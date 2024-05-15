@@ -21,8 +21,9 @@ RUN npm run build
 # Use official nginx image as the base image
 FROM nginx:latest
 
+COPY nginx.conf /etc/nginx/
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/dashboard-app /usr/share/nginx/html
 
-# Expose port 80
-EXPOSE 80
+# Expose port 8081
+EXPOSE 8081

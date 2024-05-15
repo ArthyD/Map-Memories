@@ -1,4 +1,4 @@
-name :=anniv-ihm
+name :=anniv-api
 platform := linux/arm/v7
 build:
 	docker build --platform $(platform) -t $(name) .

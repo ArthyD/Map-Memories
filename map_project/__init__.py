@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 import os
-
+from flask_cors import cross_origin, CORS
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -16,6 +16,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     db.init_app(app)
+    CORS(app)
     
 
     from .website import views
