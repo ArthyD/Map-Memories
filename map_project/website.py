@@ -72,7 +72,7 @@ def connect():
         password = request.form.get('pass')
         runAndWait("ifconfig wlan1 up")
         runAndWait("raspi-config nonint do_wifi_country FR")
-        runAndWait(f"raspi-config nonint do_wifi_ssid_passphrase {ssid} {password}")
+        runAndWait(f"raspi-config nonint do_wifi_ssid_passphrase '{ssid}' '{password}'")
         runAndWait("ifconfig wlan1 up")
         # os.system(f"wpa_passphrase '{ssid}' '{password}' >> /etc/wpa_supplicant/wpa_supplicant.conf'")
         # os.system("pkill wpa_supplicant")
