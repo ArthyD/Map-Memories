@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify, send_file
+from flask import Blueprint, render_template, request, flash, jsonify, send_file,redirect
 from . import db, ALLOWED_EXTENSIONS,UPLOAD_FOLDER,script_directory
 from sqlalchemy import func
 from werkzeug.utils import secure_filename
@@ -57,6 +57,17 @@ def get_locations():
 def get_iamge(name):
     
     return send_file(UPLOAD_FOLDER+"/"+name)
+
+
+@views.route('/connect', methods=['GET', 'POST'])
+def connect():
+    if request.method == 'POST':
+        ssid = request.form.get('ssid')
+        password = request.form.get('pass')
+        os.system(f"nmcli d wifi connect {ssid} password {password} iface wlan1")
+        return redirect("/")
+
+    return render_template("connect.html")
 
 def allowed_file(filename):
     return '.' in filename and \
