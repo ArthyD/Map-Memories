@@ -4,4 +4,10 @@
     </div>
 </div>
   
-
+<p-dialog header={{imageName}} [modal]="true" [(visible)]="visible" [style]="{ width: '75rem' }">
+  <p-image 
+  src={{imagePath}}
+  alt="Image" 
+  width="250" 
+  [preview]="true" />
+</p-dialog>

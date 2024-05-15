@@ -25,7 +25,7 @@ def home():
                 filename = secure_filename(file.filename)
                 file_path = os.path.join(file_path, filename)
                 file.save(file_path)
-            new_image = ImageServer(name=name, lat=lat, long=long, path=file_path)
+            new_image = ImageServer(name=name, lat=lat, long=long, path=filename)
             db.session.add(new_image)
             db.session.commit()
             photo_list = ImageServer.query.all()
@@ -33,7 +33,8 @@ def home():
         elif 'suppr' in request.form:
             id = request.form.get("suppr")
             photo_to_delete = ImageServer.query.filter_by(id=id).first()
-            os.remove(photo_to_delete.path)
+            file_path = os.path.join(script_directory, UPLOAD_FOLDER)
+            os.remove(os.path.join(file_path, photo_to_delete.path))
             db.session.delete(photo_to_delete)
             db.session.commit()
             

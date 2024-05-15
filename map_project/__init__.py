@@ -6,10 +6,10 @@ import os
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
-UPLOAD_FOLDER = 'upload/'
+
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 script_directory = os.path.dirname(os.path.abspath(__file__))
-
+UPLOAD_FOLDER = os.path.join(script_directory,"../dashboard-app/src/assets")
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'

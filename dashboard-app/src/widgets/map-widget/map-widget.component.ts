@@ -11,21 +11,15 @@ import { MapService } from '../map.service';
 export class MapWidgetComponent {
   constructor(private http: HttpClient, private mapService: MapService){}
 
-  currentCaroussel:any[]=[];
-
   public mapMemories:any;
 
-
-  newImageLocationName:string="";
-
-  newImageLocationLat:Number=0.0;
-
-  newImageLocationLong:Number=0.0;
-
+  imagePath:string="";
+  imageName:string="";
+  visible: boolean = false;
   ngAfterViewInit(): void {
     
     // Déclaration de la carte avec les coordonnées du centre et le niveau de zoom.
-    this.mapMemories = L.map('mapMemories').setView([48.3833, -4.6167], 10);
+    this.mapMemories = L.map('mapMemories').setView([48.3833, -2.6167], 10);
     this.mapMemories.scrollWheelZoom.disable();
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: 'Carte Souvenirs'
@@ -42,11 +36,18 @@ export class MapWidgetComponent {
       for(let location of data){
         console.log(location)
         L.marker([location.lat,location.long], {icon: myIcon}).bindPopup(location.name).on('click',()=>{
-          console.log(location.path)
+          console.log(location.path);
+          this.imagePath="../../assets/"+location.path;
+          this.imageName=location.name;
+          this.showDialog();
         }).addTo(this.mapMemories);
       }
     });
 
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 
 
