@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, send_file
 from . import db, ALLOWED_EXTENSIONS,UPLOAD_FOLDER,script_directory
 from sqlalchemy import func
 from werkzeug.utils import secure_filename
@@ -52,6 +52,11 @@ def get_locations():
         print(image)
         locations.append(image)
     return locations
+
+@views.route('/get_image/<name>')
+def get_iamge(name):
+    
+    return send_file(UPLOAD_FOLDER+"/"+name)
 
 def allowed_file(filename):
     return '.' in filename and \
