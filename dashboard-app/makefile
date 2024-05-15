@@ -1,4 +1,4 @@
-name :=triss-dashboard
+name :=anniv
 platform := linux/arm/v7
 build:
 	docker build --platform $(platform) -t $(name) .
