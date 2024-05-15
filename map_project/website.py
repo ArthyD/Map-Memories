@@ -67,7 +67,7 @@ def get_iamge(name):
 @views.route('/connect', methods=['GET', 'POST'])
 @cross_origin()
 def connect():
-    process = subprocess.Popen("iwlist wlan1 scan | grep ESSID", stdout=subprocess.PIPE)
+    process = subprocess.Popen("iwlist wlan1 scan | grep ESSID", shell=True, stdout=subprocess.PIPE)
     process.wait()
     out, err= process.communicate()
     print(out)
