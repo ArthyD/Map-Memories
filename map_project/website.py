@@ -69,7 +69,7 @@ def connect():
     if request.method == 'POST':
         ssid = request.form.get('ssid')
         password = request.form.get('pass')
-        os.system(f"nmcli d wifi connect '{ssid}' password '{password}' iface wlan1")
+        os.system(f"nmcli d wifi connect '{ssid}' password '{password}'")
         return redirect("/")
 
     return render_template("connect.html")
