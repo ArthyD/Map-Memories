@@ -3,6 +3,7 @@ from . import db, ALLOWED_EXTENSIONS,UPLOAD_FOLDER,script_directory
 from sqlalchemy import func
 from werkzeug.utils import secure_filename
 import os
+import subprocess
 from .models import ImageServer
 from flask_cors import cross_origin, CORS
 
@@ -69,12 +70,22 @@ def connect():
     if request.method == 'POST':
         ssid = request.form.get('ssid')
         password = request.form.get('pass')
-        os.system(f"wpa_passphrase '{ssid}' '{password}' >> /etc/wpa_supplicant/wpa_supplicant.conf'")
-        os.system("pkill wpa_supplicant")
-        os.system("wpa_supplicant -d -i wlan1 -c /etc/wpa_supplicant/wpa_supplicant.conf")
+        runAndWait("ifconfig wlan1 up")
+        runAndWait("raspi-config nonint do_wifi_country FR")
+        runAndWait(f"raspi-config nonint do_wifi_ssid_passphrase {ssid} {password}")
+        runAndWait("ifconfig wlan1 up")
+        # os.system(f"wpa_passphrase '{ssid}' '{password}' >> /etc/wpa_supplicant/wpa_supplicant.conf'")
+        # os.system("pkill wpa_supplicant")
+        # os.system("wpa_supplicant -d -i wlan1 -c /etc/wpa_supplicant/wpa_supplicant.conf")
         return redirect("/")
 
     return render_template("connect.html")
+
+def runAndWait(command):
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+    process.wait()
+    var = process.returncode
+    print(var)
 
 def allowed_file(filename):
     return '.' in filename and \
