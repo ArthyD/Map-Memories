@@ -16,6 +16,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     db.init_app(app)
+    CORS(app)
+    
 
     from .website import views
 
