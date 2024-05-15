@@ -9,6 +9,7 @@ from flask_cors import cross_origin, CORS
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
+@cross_origin()
 def home():
     if request.method == 'POST':
         if 'upload' in request.form:
@@ -63,6 +64,7 @@ def get_iamge(name):
 
 
 @views.route('/connect', methods=['GET', 'POST'])
+@cross_origin()
 def connect():
     if request.method == 'POST':
         ssid = request.form.get('ssid')
