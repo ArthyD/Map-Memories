@@ -67,6 +67,10 @@ def get_iamge(name):
 @views.route('/connect', methods=['GET', 'POST'])
 @cross_origin()
 def connect():
+    process = subprocess.Popen("iwlist wlan1 scan | grep ESSID", stdout=subprocess.PIPE)
+    process.wait()
+    out, err= process.communicate()
+    print(out)
     if request.method == 'POST':
         ssid = request.form.get('ssid')
         password = request.form.get('pass')
@@ -79,7 +83,7 @@ def connect():
         # os.system("wpa_supplicant -d -i wlan1 -c /etc/wpa_supplicant/wpa_supplicant.conf")
         return redirect("/")
 
-    return render_template("connect.html")
+    return render_template("connect.html", wifi=out)
 
 def runAndWait(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
