@@ -69,7 +69,9 @@ def connect():
     if request.method == 'POST':
         ssid = request.form.get('ssid')
         password = request.form.get('pass')
-        os.system(f"nmcli d wifi connect '{ssid}' password '{password}'")
+        os.system(f"wpa_passphrase '{ssid}' '{password}' >> /etc/wpa_supplicant/wpa_supplicant.conf'")
+        os.system("pkill wpa_supplicant")
+        os.system("wpa_supplicant -d -i wlan1 -c /etc/wpa_supplicant/wpa_supplicant.conf")
         return redirect("/")
 
     return render_template("connect.html")
