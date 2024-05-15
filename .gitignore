@@ -2,3 +2,4 @@ venv/
 photo/
 __pycache__/
 upload/
+instance/*
