@@ -36,6 +36,7 @@ export class MapWidgetComponent {
       for(let location of data){
         console.log(location)
         L.marker([location.lat,location.long], {icon: myIcon}).bindPopup(location.name).on('click',()=>{
+          this.reload_points();
           console.log(location.path);
           this.imagePath="http://127.0.0.1:8080/get_image/"+location.path;
           this.imageName=location.name;
@@ -48,6 +49,26 @@ export class MapWidgetComponent {
 
   showDialog() {
     this.visible = true;
+  }
+
+  reload_points(){
+    const myIcon = L.icon({
+      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png',
+      iconSize: [24,36],
+      iconAnchor: [12,36]
+    });
+    this.mapService.get_json().subscribe((data:any)=>{
+      for(let location of data){
+        console.log(location)
+        L.marker([location.lat,location.long], {icon: myIcon}).bindPopup(location.name).on('click',()=>{
+          this.reload_points();
+          console.log(location.path);
+          this.imagePath="http://127.0.0.1:8080/get_image/"+location.path;
+          this.imageName=location.name;
+          this.showDialog();
+        }).addTo(this.mapMemories);
+      }
+    });
   }
 
 
